@@ -1,47 +1,56 @@
 <script>
-  /*
-  Per importare ed utilizzare un componente dentro ad un altro devo Sempre seguire questi 3 passi:
-  1) Importazione del componente
-  2) Dichiarazione del componente
-  3) Utilizzo del componente
-  */
-
-  // 1) Importazione del componente
- import AppHeader from './components/AppHeader.vue';
-
+import axios from 'axios';
 export default {
   data() {
     return {
-      count: 0
+      apiKey: '1d6a47b235ab92d9555727ab6c126dc7';
+      searchText:''
     }
   },
-  // 2) Dichiarazione del componente
   components: {
-    AppHeader
   },
 
   methods: {
-    incrementCount() {
-      this.count++;
+    search() {
+      console.log(this.searchText);
+      axios
+        .get('https://api.themoviedb.org/3/search/movie',{
+          params: {
+            api_key: this.apiKey;
+            query: this.searchText;
+          }
+        } )
+        .then((resp) => {
+          console.log(resp.data);
+        });
+    }
     }
   }
-}
+
 </script>
 
 <template>
   <div>
-    <!-- 3) Utilizzo del componente -->
-    <AppHeader/>
-    <main>
-      <button @click="incrementCount()">
-        {{ count }}
+    <div>
+      <form @submit.prevent="search">
+        <input v-model="searchText" type="text" placeholder="Cerca info...">
+        <button type="submit">
+          Cerca
+        </button>
+      </form>
+    </div>
+    <div>
+      <input v-model="searchText" type="text" placeholder="Cerca info...">
+      <button @click="search">
+        Cerca
       </button>
-    </main>
+    </div>
   </div>
+  
 </template>
 
-<style scoped>
-main {
-  text-align: center;
-}
+<style lang="scss">
+@use 'assets/scss/main' as *;
+
+@import 'bootstrap/scss/bootstrap';
 </style>
