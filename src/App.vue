@@ -5,6 +5,7 @@ export default {
     return {
       apiKey: '1d6a47b235ab92d9555727ab6c126dc7';
       searchText:''
+      movies: []
     }
   },
   components: {
@@ -45,6 +46,9 @@ export default {
         Cerca
       </button>
     </div>
+  </div>
+  <div>
+    {{ movies }}
   </div>
   
 </template>
