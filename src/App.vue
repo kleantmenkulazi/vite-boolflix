@@ -1,13 +1,15 @@
 <script>
 import axios from 'axios';
+import { store } from './components/store.js';
 
-
+import AppHeader from './AppHeader.vue';
 import SingleItem from './components/SingleItem.vue';
+import AppHeader from './AppHeader.vue';
 export default {
   data() {
     return {
+      store,
       apiKey: '1d6a47b235ab92d9555727ab6c126dc7',
-      searchText:'',
       movies: [],
       series: [],
       imgUrl: 'https://cdn.iconscout.com/icon/free/png-256/free-italy-flag-icon-download-in-svg-png-gif-file-formats--country-nation-union-flags-pack-maps-and-navigation-icons-32999.png?f=webp&w=256',
@@ -16,18 +18,19 @@ export default {
     }
   },
   components: {
-    SingleItem
+    AppHeader,
+    SingleItem,
   },
 
   methods: {
     search() {
-      console.log(this.searchText);
+      console.log(this.store.searchText);
 
       axios
         .get('https://api.themoviedb.org/3/search/movie', {
           params: {
             api_key: this.apiKey,
-            query: this.searchText,
+            query: this.store.searchText,
           }
         } )
         .then((resp) => {
@@ -39,7 +42,7 @@ export default {
         .get('https://api.themoviedb.org/3/search/tv', {
           params: {
             api_key: this.apiKey,
-            query: this.searchText,
+            query: this.store.searchText,
           }
         } )
         .then((resp) => {
@@ -72,24 +75,9 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div>
-      <form @submit.prevent="search">
-        <input v-model="searchText" type="text" placeholder="Cerca info...">
-        <button type="submit">
-          Cerca
-        </button>
-      </form>
-    </div>
-    <div>
-      <input v-model="searchText" type="text" placeholder="Cerca info...">
-      <button @click="search">
-        Cerca
-      </button>
-    </div>
-  </div>
   
   
+  <AppHeader @search="search()"/>
   
   <div>
     <h2>
