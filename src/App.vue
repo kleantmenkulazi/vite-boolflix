@@ -1,5 +1,8 @@
 <script>
 import axios from 'axios';
+
+
+import SingleItem from './components/SingleItem.vue';
 export default {
   data() {
     return {
@@ -13,6 +16,7 @@ export default {
     }
   },
   components: {
+    SingleItem
   },
 
   methods: {
@@ -85,13 +89,7 @@ export default {
     </div>
   </div>
   
-  <div>
-    <img src="/public/vite.svg" alt="">
-    <img src="./assets/vue.svg" alt="">
-    <img :src="imgUrl" alt="">
-    <img :src="otherImgUrl" alt="">
-    <img :src="anotherImgUrl" alt="">
-  </div>
+  
   
   <div>
     <h2>
@@ -99,20 +97,13 @@ export default {
     </h2>
     <ol>
       <li v-for="(movie, i) in movie" :key="i">
-        <ul>
-          <li>
-            Titolo: {{ movie.title }}
-          </li>
-          <li>
-            Titolo originale: {{ movie.original_title }}
-          </li>
-          <li>
-            Lingua: <img :src="getFlag(movie.original_language)" alt="">
-          </li>
-          <li>
-            Voto: {{ movie.vote_avarage }}
-          </li>
-        </ul>
+        <SingleItem
+        :title="movie.title"
+        :originalTitle="movie.originalTitle"
+        :language="movie.original_language"
+        :vote="movie.vote_avarage"
+        />
+        
         <hr>
       </li>
     </ol>
@@ -126,20 +117,14 @@ export default {
     </h2>
     <ol>
       <li v-for="(serie, i) in series" :key="i">
-        <ul>
-          <li>
-            Titolo: {{ serie.name }}
-          </li>
-          <li>
-            Titolo originale: {{ serie.original_name }}
-          </li>
-          <li>
-            Lingua: <img :src="getFlag(serie.original_language)" alt="">
-          </li>
-          <li>
-            Voto: {{ serie.vote_avarage }}
-          </li>
-        </ul>
+
+        <SingleItem
+        :title="serie.name"
+        :originalTitle="serie.original_name"
+        :language="serie.original_language"
+        :vote="serie.vote_avarage"
+        />
+        
         <hr>
       </li>
     </ol>
