@@ -1,10 +1,17 @@
 <script>
 export default {
+  data() {
+    return {
+      baseImgUrl: 'https://image.tmdb.org/t/p/',
+      posterSize: 'w342'
+    };
+  },
     props: {
         title: String,
         originalTitle: String,
         language: String,
         vote: Number,
+        posterPath: String,
     },
     methods: {
         getFlag(lang) {
@@ -31,6 +38,9 @@ export default {
 
 <template>
     <ul>
+      <li>
+        <img :src="baseImgUrl + posterSize + posterPath" alt="">
+      </li>
           <li>
             Titolo: {{ title }}
           </li>

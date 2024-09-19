@@ -1,5 +1,5 @@
 <script>
-  import { store } from './components/store.js';
+  import { store } from '../store.js';
   // my-component.js
 export default {
   data() {
