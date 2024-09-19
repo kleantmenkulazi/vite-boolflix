@@ -51,7 +51,24 @@ export default {
             Lingua: <img :src="getFlag(language)" alt="">
           </li>
           <li>
-            Voto: {{ vote }}
+            <div>
+              Voto originale: {{ vote }}
+            </div>
+            <div>
+              Voto a metà: {{ vote / 2 }}
+            </div>
+            <div>
+              Voto a metà arrotondato per difetto: {{ Math.floor(vote / 2) }}
+            </div>
+            <div>
+              Voto a metà arrotondato per eccesso: {{ Math.ceil(vote / 2) }}
+            </div>
+            <div>
+              Numero stelle piene: {{ Math.ceil(vote / 2) }}
+            </div>
+            <div>
+              Numero stelle vuote: {{ 5 - (Math.ceil(vote / 2)) }}
+            </div>
           </li>
         </ul>
 </template>
