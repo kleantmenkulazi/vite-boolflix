@@ -3,8 +3,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      apiKey: '1d6a47b235ab92d9555727ab6c126dc7';
-      searchText:''
+      apiKey: '1d6a47b235ab92d9555727ab6c126dc7',
+      searchText:'',
       movies: []
     }
   },
@@ -17,8 +17,8 @@ export default {
       axios
         .get('https://api.themoviedb.org/3/search/movie',{
           params: {
-            api_key: this.apiKey;
-            query: this.searchText;
+            api_key: this.apiKey,
+            query: this.searchText,
           }
         } )
         .then((resp) => {
@@ -48,7 +48,25 @@ export default {
     </div>
   </div>
   <div>
-    {{ movies }}
+    <ol>
+      <li v-for="(movie, i) in movie" :key="i">
+        <ul>
+          <li>
+            Titolo: {{ movie.title }}
+          </li>
+          <li>
+            Titolo originale: {{ movie.original_title }}
+          </li>
+          <li>
+            Lingua: {{ movie.original_language }}
+          </li>
+          <li>
+            Voto: {{ movie.vote_avarage }}
+          </li>
+        </ul>
+        <hr>
+      </li>
+    </ol>
   </div>
   
 </template>
