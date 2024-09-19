@@ -30,11 +30,24 @@ export default {
         });
     },
     getFlag(lang) {
-      if() {
-
+      const validLangs = [
+        'en',
+        'it',
+        'jp'
+      ];
+      if(validLangs.includes(lang)) {
+        if (lang == 'en') {
+          return '/img_flags/en.gif';
+        }
+        else if (lang == 'it') {
+          return '/img_flags/it.gif';
+        }
+        else if (lang == 'jp') {
+          return '/img_flags/jp.gif';
+        }
       }
       else {
-        
+        return '/img_flags/pirate.png'
       }
     }
 
@@ -80,18 +93,7 @@ export default {
             Titolo originale: {{ movie.original_title }}
           </li>
           <li>
-            <template v-if="movie.original_language == 'en'">
-            Lingua: <img src="/public/img_flags/en.gif" alt="">
-            </template>
-            <template v-else-if="movie.original_language == 'it'">
-            Lingua: <img src="/public/img_flags/it.gif" alt="">
-            </template>
-            <template v-else-if="movie.original_language == 'jp'">
-            Lingua: <img src="/public/img_flags/jp.gif" alt="">
-            </template>
-            <template v-else>
-            Lingua: {{ movie.original_language }}>
-            </template>
+            Lingua: <img :src="getFlag(movie.original_language)" alt="">
           </li>
           <li>
             Voto: {{ movie.vote_avarage }}
