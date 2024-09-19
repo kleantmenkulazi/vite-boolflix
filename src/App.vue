@@ -5,7 +5,10 @@ export default {
     return {
       apiKey: '1d6a47b235ab92d9555727ab6c126dc7',
       searchText:'',
-      movies: []
+      movies: [],
+      imgUrl: 'https://cdn.iconscout.com/icon/free/png-256/free-italy-flag-icon-download-in-svg-png-gif-file-formats--country-nation-union-flags-pack-maps-and-navigation-icons-32999.png?f=webp&w=256',
+      otherImgUrl: '/vite.svg',
+      anotherImgUrl: './assets/vue.svg'
     }
   },
   components: {
@@ -15,7 +18,7 @@ export default {
     search() {
       console.log(this.searchText);
       axios
-        .get('https://api.themoviedb.org/3/search/movie',{
+        .get('https://api.themoviedb.org/3/search/movie', {
           params: {
             api_key: this.apiKey,
             query: this.searchText,
@@ -23,8 +26,18 @@ export default {
         } )
         .then((resp) => {
           console.log(resp.data);
+          this.movies = resp.data.results;
         });
+    },
+    getFlag(lang) {
+      if() {
+
+      }
+      else {
+        
+      }
     }
+
     }
   }
 
@@ -47,6 +60,15 @@ export default {
       </button>
     </div>
   </div>
+  
+  <div>
+    <img src="/public/vite.svg" alt="">
+    <img src="./assets/vue.svg" alt="">
+    <img :src="imgUrl" alt="">
+    <img :src="otherImgUrl" alt="">
+    <img :src="anotherImgUrl" alt="">
+  </div>
+  
   <div>
     <ol>
       <li v-for="(movie, i) in movie" :key="i">
@@ -58,7 +80,18 @@ export default {
             Titolo originale: {{ movie.original_title }}
           </li>
           <li>
-            Lingua: {{ movie.original_language }}
+            <template v-if="movie.original_language == 'en'">
+            Lingua: <img src="/public/img_flags/en.gif" alt="">
+            </template>
+            <template v-else-if="movie.original_language == 'it'">
+            Lingua: <img src="/public/img_flags/it.gif" alt="">
+            </template>
+            <template v-else-if="movie.original_language == 'jp'">
+            Lingua: <img src="/public/img_flags/jp.gif" alt="">
+            </template>
+            <template v-else>
+            Lingua: {{ movie.original_language }}>
+            </template>
           </li>
           <li>
             Voto: {{ movie.vote_avarage }}
@@ -72,7 +105,11 @@ export default {
 </template>
 
 <style lang="scss">
-@use 'assets/scss/main' as *;
+@use './style.css' as *;
 
-@import 'bootstrap/scss/bootstrap';
+img {
+  max-width: 50px;
+}
+
+
 </style>
