@@ -69,6 +69,10 @@ export default {
             <div>
               Numero stelle vuote: {{ 5 - (Math.ceil(vote / 2)) }}
             </div>
+            <div>
+              <i v-for="x in (Math.ceil(vote / 2))" class="fa-solid fa-star" :key="x"></i>
+              <i v-for="x in (5 - (Math.ceil(vote / 2)))" class="fa-regular fa-star" :key="x"></i>
+            </div>
           </li>
         </ul>
 </template>
