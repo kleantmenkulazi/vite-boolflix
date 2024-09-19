@@ -6,6 +6,7 @@ export default {
       apiKey: '1d6a47b235ab92d9555727ab6c126dc7',
       searchText:'',
       movies: [],
+      series: [],
       imgUrl: 'https://cdn.iconscout.com/icon/free/png-256/free-italy-flag-icon-download-in-svg-png-gif-file-formats--country-nation-union-flags-pack-maps-and-navigation-icons-32999.png?f=webp&w=256',
       otherImgUrl: '/vite.svg',
       anotherImgUrl: './assets/vue.svg'
@@ -17,6 +18,7 @@ export default {
   methods: {
     search() {
       console.log(this.searchText);
+
       axios
         .get('https://api.themoviedb.org/3/search/movie', {
           params: {
@@ -25,29 +27,38 @@ export default {
           }
         } )
         .then((resp) => {
-          console.log(resp.data);
+          console.log('Movies',resp.data);
           this.movies = resp.data.results;
+        });
+
+        axios
+        .get('https://api.themoviedb.org/3/search/tv', {
+          params: {
+            api_key: this.apiKey,
+            query: this.searchText,
+          }
+        } )
+        .then((resp) => {
+          console.log('Series',resp.data);
+          this.series = resp.data.results;
         });
     },
     getFlag(lang) {
       const validLangs = [
         'en',
         'it',
-        'jp'
+        'ja'
       ];
       if(validLangs.includes(lang)) {
-        if (lang == 'en') {
-          return '/img_flags/en.gif';
-        }
-        else if (lang == 'it') {
-          return '/img_flags/it.gif';
-        }
-        else if (lang == 'jp') {
+        if (lang == 'ja') {
           return '/img_flags/jp.gif';
+        }
+        else {
+          return '/img_flags/' + lang + '.gif';
         }
       }
       else {
-        return '/img_flags/pirate.png'
+        return '/img_flags/pirate.png';
       }
     }
 
@@ -83,6 +94,9 @@ export default {
   </div>
   
   <div>
+    <h2>
+      Movies
+    </h2>
     <ol>
       <li v-for="(movie, i) in movie" :key="i">
         <ul>
@@ -97,6 +111,33 @@ export default {
           </li>
           <li>
             Voto: {{ movie.vote_avarage }}
+          </li>
+        </ul>
+        <hr>
+      </li>
+    </ol>
+  </div>
+
+  <hr>
+
+  <div>
+    <h2>
+      Series
+    </h2>
+    <ol>
+      <li v-for="(serie, i) in series" :key="i">
+        <ul>
+          <li>
+            Titolo: {{ serie.name }}
+          </li>
+          <li>
+            Titolo originale: {{ serie.original_name }}
+          </li>
+          <li>
+            Lingua: <img :src="getFlag(serie.original_language)" alt="">
+          </li>
+          <li>
+            Voto: {{ serie.vote_avarage }}
           </li>
         </ul>
         <hr>
